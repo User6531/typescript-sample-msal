@@ -6,7 +6,7 @@ import { TUser } from "../utils/meApiCall";
 import { refreshAccessToken } from "../utils/refreshAccessToken";
 
 export const ProfileData: React.FC<{ graphData: TUser }> = ({ graphData }) => {
-  const [first, setfirst] = useState<TDonutGraphItem[]>([]);
+  const [first, setfirst] = useState<TDonutGraphItem | null>(null);
   const [error, setErorr] = useState<Error | null>(null);
 
   const getDonutData = async () => {
@@ -40,12 +40,12 @@ export const ProfileData: React.FC<{ graphData: TUser }> = ({ graphData }) => {
         <button onClick={setFakeToken}>set fake token</button>{" "}
         <button onClick={setRealToken}>set real token</button>{" "}
       </div>
-      {first.length > 0 && <div key={first[0].id}>{first[0].email}</div>}
+      {first && <div>{first.firstName}</div>}
       <div>{error && error.message}</div>{" "}
-      {(error || first.length > 0) && (
+      {(error || first !== null) && (
         <button
           onClick={() => {
-            setfirst([]);
+            setfirst(null);
             setErorr(null);
           }}
         >
